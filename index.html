@@ -98,7 +98,7 @@
 </div>
 
 <div class="bar" id="bar" style="display:none">
-  <div class="info">已选 <b id="cntCourses">0</b> 门 / 共 <b id="cntSessions">0</b> 节课</div>
+  <div class="info">必修 <b id="cntReq">0</b> 门(自动含) · 选修 <b id="cntElec">0</b> 门 · 共 <b id="cntSessions">0</b> 节</div>
   <button class="btn" id="genBtn">生成 .ics</button>
 </div>
 
@@ -178,8 +178,11 @@ function selectedCourses(){
 }
 function updateBar(){
   const sel = selectedCourses();
+  const reqN = sel.filter(c=>c.type==="必修").length;
+  const elecN = sel.filter(c=>c.type==="选修").length;
   const n = sel.reduce((a,c)=>a+c.sessions.length,0);
-  $("cntCourses").textContent = sel.length;
+  $("cntReq").textContent = reqN;
+  $("cntElec").textContent = elecN;
   $("cntSessions").textContent = n;
 }
 
